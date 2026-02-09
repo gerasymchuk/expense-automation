@@ -1,6 +1,9 @@
 .venv/
 credentials/
+data/
 .env
 __pycache__/
 *.pyc
 .DS_Store
+test.py
+.vscode/
