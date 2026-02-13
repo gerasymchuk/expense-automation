@@ -22,21 +22,13 @@ class SheetsManager:
         self.sheet = self.client.open_by_key(self.sheet_id)
 
 
-    def insert_expense_rows(self, rows: list[TransactionRow]) -> None:
+    def insert_rows(self, worksheet_name: str, rows: list[TransactionRow]) -> None:
         if not rows:
             return
 
-        ws = self.sheet.worksheet('Витрати')
+        ws = self.sheet.worksheet(worksheet_name)
         rows = [row.to_list() for row in rows]
         ws.insert_rows(rows, row=2, value_input_option='USER_ENTERED')
-
-    def insert_income_rows(self, rows: list[TransactionRow]) -> None:
-        if not rows:
-            return
-
-        ws = self.sheet.worksheet('Доходи')
-        rows = [row.to_list() for row in rows]
-        ws.insert_rows(rows, row=2)
 
     def get_last_processed_month(self) -> tuple[str, str]:
         ws = self.sheet.worksheet('metadata')
@@ -47,3 +39,30 @@ class SheetsManager:
     def update_last_processed_month(self, year_month: str) -> None:
         ws = self.sheet.worksheet('metadata')
         ws.update_acell('B1', year_month)
+
+    def _find_month_rows(self, worksheet_name: str, year: str, month: str) -> list[int]:
+        ws = self.sheet.worksheet(worksheet_name)
+        all_rows = ws.get_all_values()
+        list_of_indexes = []
+        for row_number, row in enumerate[list[int]](all_rows[1:]):
+            if row[0] == year and row[1] == month:
+                list_of_indexes.append(row_number + 2)
+        return list_of_indexes
+
+    def insert_or_update_month(self, worksheet_name, rows: list[TransactionRow]):
+        if not rows:
+            return
+
+        year = rows[0].year
+        month = rows[0].month
+
+        existing = self._find_month_rows(worksheet_name, year, month)
+
+        if existing:
+            first = existing[0]
+            last = existing[-1]
+            ws = self.sheet.worksheet(worksheet_name)
+            ws.delete_rows(first, last)
+
+
+        self.insert_rows(worksheet_name, rows)
