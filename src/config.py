@@ -34,7 +34,7 @@ class Config:
                 raise ValueError("CSV has no data rows")
 
             # required columns
-            required_cols = ['date', 'category', 'amount']
+            required_cols = ['date', 'category', 'outcome', 'income']
             missing = [col for col in required_cols if col not in df.columns]
             if missing:
                 raise ValueError(f"Missing columns: {missing}")
