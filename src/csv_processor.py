@@ -1,5 +1,6 @@
 import pandas as pd
 from src.model import TransactionRow
+from datetime import datetime
 
 def _parse_date_column(df: pd.DataFrame, col: str = 'date') -> pd.DataFrame:
     df[col] = pd.to_datetime(df[col])
@@ -25,6 +26,14 @@ def to_expense_rows(df: pd.DataFrame) -> list[TransactionRow]:
 def process_expenses(csv_path:str, month: str, year: str) -> list[TransactionRow]:
     df = pd.read_csv(csv_path)
     df = _parse_date_column(df)
+
+    today = datetime.now()
+    future_transactions = df[df['date'] > today]
+
+    if len(future_transactions) > 0:
+        future_dates = future_transactions['date'].tolist()
+        raise ValueError(f"Found transactions with future dates: {future_dates}")
+
     df = _extract_year_month(df)
     df = filter_by_month_year(df, month, year)
     df = aggregate_by_category(df)
