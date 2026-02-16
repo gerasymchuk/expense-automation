@@ -36,9 +36,9 @@ class SheetsManager:
         last_processed_month = tuple[str, str](year_month.split(' ')) # ('2026', 'January')
         return last_processed_month
 
-    def update_last_processed_month(self, year_month: str) -> None:
+    def update_last_processed_month(self, year: str, month: str) -> None:
         ws = self.sheet.worksheet('metadata')
-        ws.update_acell('B1', year_month)
+        ws.update_acell('B1', f"{year} {month}")
 
     def _find_month_rows(self, worksheet_name: str, year: str, month: str) -> list[int]:
         ws = self.sheet.worksheet(worksheet_name)

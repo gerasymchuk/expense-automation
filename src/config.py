@@ -5,7 +5,7 @@ import pandas as pd
 load_dotenv()
 
 class Config:
-    SHEET_ID = os.getenv('SHEET_ID')
+    SHEET_ID = os.getenv('SHEET_ID_PROD')
     CREDENTIALS_PATH = os.getenv('CREDENTIALS_PATH')
     CSV_PATH = os.getenv('CSV_PATH')
 
@@ -18,6 +18,7 @@ class Config:
         if not os.path.exists(cls.CREDENTIALS_PATH):
             raise FileNotFoundError(f'Credentials file not found: {cls.CREDENTIALS_PATH}')
 
+    @staticmethod
     def validate_csv(csv_path: str):
         if not os.path.exists(csv_path):
             raise FileNotFoundError(f"CSV file not found: {csv_path}")

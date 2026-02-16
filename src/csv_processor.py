@@ -15,7 +15,7 @@ def filter_by_month_year(df: pd.DataFrame, month: str, year: str) -> pd.DataFram
     return df[(df['year'] == year) & (df['month'] == month)]
 
 def aggregate_by_category(df: pd.DataFrame) -> pd.DataFrame:
-    categories_to_exclude = ['Transfer', 'Податки']
+    categories_to_exclude = ['Transfer'] # temp
     df = df[~df['category'].isin(categories_to_exclude)]
     df = df[df['outcome'] < 0].groupby(['year', 'month', 'category'])['outcome'].sum().abs().reset_index()
     return df
