@@ -8,3 +8,6 @@ __pycache__/
 test.py
 .vscode/
 doc.txt
+cache/
+1.md
+_test_cache.py

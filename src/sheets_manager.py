@@ -66,3 +66,7 @@ class SheetsManager:
 
 
         self.insert_rows(worksheet_name, rows)
+
+    def get_all_data(self, worksheet_name: str) -> list[list]:
+        ws = self.sheet.worksheet(worksheet_name)
+        return ws.get_all_values()

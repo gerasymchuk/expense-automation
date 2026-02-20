@@ -8,6 +8,41 @@ class Config:
     SHEET_ID = os.getenv('SHEET_ID_PROD')
     CREDENTIALS_PATH = os.getenv('CREDENTIALS_PATH')
     CSV_PATH = os.getenv('CSV_PATH')
+    CACHE_DIR = os.getenv('CACHE_DIR')
+
+    Expenses_Categories = [
+        'Догляд',
+        'Донати',
+        'Житло',
+        'Заощадження',
+        'Здоров’я',
+        'Інше',
+        'Кафе',
+        'Мамі',
+        'Одяг',
+        'Освіта і книги',
+        'Платежі',
+        'Побут',
+        'Подарунки',
+        'Податки',
+        'Подоражі',
+        'Продукти',
+        'Розваги',
+        'Спорт',
+        'Таксі',
+        'Терапія',
+        'Техніка',
+        'Шері'
+    ]
+
+    Income_Categories = [
+
+        'Оренда квартири',
+        'A-Bank',
+        'Продаж речей',
+        'Інше',
+        'OneReach',
+    ]
 
     @classmethod
     def validate(cls):
